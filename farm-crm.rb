@@ -2,7 +2,7 @@ require_relative 'field.rb'
 
 class Farm
 
- def main_menu
+ def self.main_menu
    while true # repeat indefinitely
       print_main_menu
       user_selected = gets.to_i
@@ -10,17 +10,16 @@ class Farm
     end
  end
 
- def print_main_menu
-    print "Welcome to the farm. What would you like to do?"
-    print '[1] Create Field'
-    print '[2] Harvest Crops'
-    print '[3] Status of Farm'
-    print '[4] Relax'
-    print '[5] Exit'
-    print 'Enter a number: '
+ def self.print_main_menu
+    puts '[1] Field'
+    puts '[2] Harvest'
+    puts '[3] Status'
+    puts '[4] Relax'
+    puts '[5] Exit'
+    puts 'Enter a number: '
  end
 
- def call_option(user_selected)
+ def self.call_option(user_selected)
    case user_selected
    when 1 then field
    when 2 then harvest
@@ -30,27 +29,33 @@ class Farm
    end
  end
 
- def field
-   print 'What kind of field is it: corn or wheat?'
+ def self.field
+   print 'What kind of field is it? corn or wheat?'
    field_type = gets.chomp
 
    print 'How large is the field in Hectares?'
    field_size = gets.chomp.to_i
 
-   Field.create(field_type, field_size)
-
+   if field_type == 'corn'
+   Corn.create('corn', field_size)
+   elsif field_type == 'wheat'
+   Wheat.create('wheat', field_size)
+   else
+       print 'Invalid entry'
+       main_menu
+   end
  end
 
- def harvest
+ def self.harvest
    Field.harvest
  end
 
- def status
+ def self.status
    Field.status
  end
 
- def Relax
-   print "Look at this farm. It is in great shape. and its all thanks to you. Relax for a bit."
+ def self.relax
+   Field.relax
  end
 
 end
